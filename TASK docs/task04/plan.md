@@ -15,6 +15,12 @@
 | 02 | phase02.md | D2 多轮审稿机制 | `juben_gen/review_loop.py` |
 | 03 | phase03.md | D3 样例对比评估 | `juben_gen/evaluator.py` |
 
+## 进度追踪
+
+- [x] phase01: D1 输出校验器
+- [x] phase02: D2 多轮审稿机制
+- [ ] phase03: D3 样例对比评估
+
 ## 执行顺序
 Phase 01 → 02 → 03（校验器是审稿触发条件，评估是最终报告）
 

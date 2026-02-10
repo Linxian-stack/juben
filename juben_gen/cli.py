@@ -51,7 +51,82 @@ def cmd_write(args: argparse.Namespace) -> int:
         output_dir=args.out,
     )
     print(f"OK: {len(episodes)} 集剧本已生成 -> {args.out}")
+
+    # 可选：自动审稿循环
+    if getattr(args, "review", False):
+        from .review_loop import review_all_episodes
+
+        ep_dir = str(Path(args.out) / "episodes")
+        results = review_all_episodes(
+            episodes_dir=ep_dir,
+            plan_path=args.plan,
+            rules=rules,
+            config=config,
+            constraints_path=args.constraints,
+            output_dir=args.out,
+            pass_threshold=args.threshold,
+            max_rounds=args.max_rounds,
+        )
+        passed = sum(1 for r in results if r.get("pass", False))
+        print(f"OK: 审稿完成 {passed}/{len(results)} 集通过")
+
     return 0
+
+
+def cmd_review(args: argparse.Namespace) -> int:
+    from .review_loop import review_all_episodes
+    from .config import maybe_load_config
+    from .rules import load_rules_from_docx
+
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+
+    config = maybe_load_config(args.config)
+    rules = load_rules_from_docx(
+        rhythm_docx=args.rhythm,
+        end_hook_docx=args.end_hook,
+        template_docx=args.template,
+    )
+
+    results = review_all_episodes(
+        episodes_dir=args.episodes,
+        plan_path=args.plan,
+        rules=rules,
+        config=config,
+        constraints_path=args.constraints,
+        output_dir=args.out,
+        pass_threshold=args.threshold,
+        max_rounds=args.max_rounds,
+    )
+
+    passed = sum(1 for r in results if r.get("pass", False))
+    total = len(results)
+    print(f"OK: 审稿完成 {passed}/{total} 集通过（最多 {args.max_rounds} 轮）")
+    return 0 if passed == total else 1
+
+
+def cmd_validate(args: argparse.Namespace) -> int:
+    import json as json_mod
+    from .validator import validate_script, load_target, format_report
+
+    script_path = Path(args.script)
+    if not script_path.exists():
+        print(f"文件不存在：{script_path}")
+        return 1
+
+    text = script_path.read_text(encoding="utf-8")
+    target = load_target(args.profile)
+    results = validate_script(text, target)
+
+    if args.json:
+        print(json_mod.dumps(
+            [r.to_dict() for r in results],
+            ensure_ascii=False,
+            indent=2,
+        ))
+    else:
+        print(format_report(results))
+
+    return 0 if all(r.passed for r in results) else 1
 
 
 def cmd_plan(args: argparse.Namespace) -> int:
@@ -172,7 +247,31 @@ def build_parser() -> argparse.ArgumentParser:
     p_write.add_argument("--constraints", default="juben_gen/constraints.fused.json", help="融合约束 JSON 路径")
     p_write.add_argument("--config", default=None, help="配置文件路径")
     p_write.add_argument("--out", required=True, help="输出目录路径")
+    p_write.add_argument("--review", action="store_true", help="生成后自动执行审稿循环")
+    p_write.add_argument("--max-rounds", type=int, default=3, help="审稿最大轮数（默认3）")
+    p_write.add_argument("--threshold", type=float, default=75.0, help="审稿通过阈值（默认75）")
     p_write.set_defaults(func=cmd_write)
+
+    # validate
+    p_validate = sub.add_parser("validate", help="校验剧本格式/行数/比例")
+    p_validate.add_argument("script", help="剧本 TXT 文件路径")
+    p_validate.add_argument("--profile", default="juben_gen/style_profile.json", help="风格画像 JSON 路径")
+    p_validate.add_argument("--json", action="store_true", help="输出 JSON 格式")
+    p_validate.set_defaults(func=cmd_validate)
+
+    # review
+    p_review = sub.add_parser("review", help="对已生成的剧本执行审稿循环（校验+评分+返修）")
+    p_review.add_argument("--episodes", required=True, help="剧本目录（含 ep1.txt, ep2.txt, ...）")
+    p_review.add_argument("--plan", default=None, help="节拍表 JSON 路径（可选，提供时加入评审上下文）")
+    p_review.add_argument("--rhythm", required=True, help="节奏适配注意事项 docx")
+    p_review.add_argument("--end_hook", required=True, help="每集结尾钩子核心 docx")
+    p_review.add_argument("--template", required=True, help="短剧一卡通用模板 docx")
+    p_review.add_argument("--constraints", default="juben_gen/constraints.fused.json", help="融合约束 JSON 路径")
+    p_review.add_argument("--config", default=None, help="配置文件路径")
+    p_review.add_argument("--out", required=True, help="输出目录路径")
+    p_review.add_argument("--max-rounds", type=int, default=3, help="最大返修轮数（默认3）")
+    p_review.add_argument("--threshold", type=float, default=75.0, help="通过阈值（默认75）")
+    p_review.set_defaults(func=cmd_review)
 
     return p
 
