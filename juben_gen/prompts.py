@@ -46,6 +46,7 @@ def build_system_prompt(
     Parameters
     ----------
     constraints : 融合约束 dict（来自 constraints.fused.json），为 None 时使用精简版。
+                  若含 "genre" 键，会自动注入题材特定约束。
     sample_snippet : 样例剧本片段（few-shot），为空则跳过。
     """
     sections: List[str] = [
@@ -64,6 +65,12 @@ def build_system_prompt(
     if constraints:
         target = constraints.get("style_target", {})
         sections.append("【结构指标约束】\n" + _build_target_summary(target))
+
+    # 注入题材特定约束
+    if constraints:
+        genre_section = _build_genre_section(constraints.get("genre"))
+        if genre_section:
+            sections.append(genre_section)
 
     # 注入节奏硬规则
     sections.append(_RHYTHM_RULES)
@@ -417,6 +424,51 @@ def _build_target_summary(target: Dict) -> str:
         v = target.get(key, {})
         if isinstance(v, dict):
             lines.append(f"- {label}：建议 {v.get('suggest')}，范围 {v.get('range')}")
+    return "\n".join(lines)
+
+
+def _build_genre_section(genre_data: Optional[Dict]) -> str:
+    """从题材 dict 构建题材特定约束文本块。无题材时返回空字符串。"""
+    if not genre_data or not isinstance(genre_data, dict):
+        return ""
+
+    genre_name = genre_data.get("genre", "未知题材")
+    lines = [f"【题材特定约束（{genre_name}）】"]
+
+    traits = genre_data.get("traits", [])
+    if traits:
+        lines.append(f"- 核心特征：{', '.join(traits)}")
+
+    conflict_patterns = genre_data.get("conflict_patterns", [])
+    if conflict_patterns:
+        lines.append("- 冲突模式（优先使用）：")
+        for cp in conflict_patterns:
+            lines.append(f"  · {cp}")
+
+    char_types = genre_data.get("character_types", [])
+    if char_types:
+        lines.append("- 角色类型参考：")
+        for ct in char_types:
+            role = ct.get("role", "")
+            style = ct.get("speech_style", "")
+            lines.append(f"  · {role}：{style}")
+
+    iconic = genre_data.get("iconic_scenes", [])
+    if iconic:
+        lines.append(f"- 标志性场景（名场面参考）：{'; '.join(iconic)}")
+
+    hooks = genre_data.get("hook_preferences", {})
+    if hooks:
+        lines.append(f"- 钩子偏好：主力={hooks.get('primary', '')}，辅助={hooks.get('secondary', '')}")
+        notes = hooks.get("notes", "")
+        if notes:
+            lines.append(f"  说明：{notes}")
+
+    overrides = genre_data.get("style_overrides", {})
+    if overrides:
+        for key, val in overrides.items():
+            lines.append(f"- {key}：{val}")
+
     return "\n".join(lines)
 
 

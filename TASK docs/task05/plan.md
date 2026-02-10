@@ -15,6 +15,12 @@
 | 02 | phase02.md | E2 风格画像参数化 | `juben_gen/style_profile.py`（重构） |
 | 03 | phase03.md | E3 新样例接入 | `juben_gen/cli.py`（扩展 profile 命令） |
 
+## 进度追踪
+
+- [x] phase01: E1 题材模板体系
+- [x] phase02: E2 风格画像参数化
+- [ ] phase03: E3 新样例接入
+
 ## 执行顺序
 Phase 01 → 02 → 03（先定义模板结构，再参数化，最后工具化接入流程）
 

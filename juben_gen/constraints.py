@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 from .rules import load_rules_from_docx
 from .style_profile import build_combined_profile, save_json
@@ -10,15 +10,19 @@ from .style_profile import build_combined_profile, save_json
 
 def build_constraints(
     *,
-    scripts: List[str | Path],
-    rhythm_docx: str | Path,
-    end_hook_docx: str | Path,
-    template_docx: str | Path,
+    scripts: List[Union[str, Path]],
+    rhythm_docx: Union[str, Path],
+    end_hook_docx: Union[str, Path],
+    template_docx: Union[str, Path],
+    genre: Optional[str] = None,
 ) -> Dict[str, object]:
+    """融合样例剧本 + 规则文本，生成可执行约束。
+
+    Parameters
+    ----------
+    genre : 题材标识（如 "apocalypse" 或 "末世"），提供时融合题材特定约束。
     """
-    融合两套优秀剧本，生成“可执行约束”（结构指标 + 格式规范 + 规则文本）。
-    """
-    style_profile = build_combined_profile([str(p) for p in scripts])
+    style_profile = build_combined_profile([str(p) for p in scripts], genre=genre)
     rules = load_rules_from_docx(
         rhythm_docx=rhythm_docx,
         end_hook_docx=end_hook_docx,
@@ -34,7 +38,7 @@ def build_constraints(
         "allowed_markers": ["【切】", "【转】", "【闪回】", "【闪出】"],
     }
 
-    return {
+    result: Dict[str, object] = {
         "style_target": style_profile["target"],
         "format_spec": format_spec,
         "rules_text": {
@@ -49,13 +53,21 @@ def build_constraints(
         },
     }
 
+    # 注入题材层约束
+    genre_data = style_profile.get("genre_specific")
+    if genre_data:
+        result["genre"] = genre_data
 
-def write_style_guide_md(constraints: Dict[str, object], path: str | Path) -> None:
+    return result
+
+
+def write_style_guide_md(constraints: Dict[str, object], path: Union[str, Path]) -> None:
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
 
     target = constraints.get("style_target", {})
     fmt = constraints.get("format_spec", {})
+    genre_data = constraints.get("genre")
 
     def _r(name: str, obj: Dict[str, object]) -> str:
         v = obj.get(name, {})
@@ -66,7 +78,7 @@ def write_style_guide_md(constraints: Dict[str, object], path: str | Path) -> No
     lines = [
         "# 融合风格约束（基于两套优秀样例）",
         "",
-        "## 结构指标（1-2分钟/集）",
+        "## 结构指标（1-2分钟/集，通用层）",
         _r("scenes_per_ep", target),  # type: ignore[arg-type]
         _r("total_lines_per_ep", target),  # type: ignore[arg-type]
         _r("dialogue_lines_per_ep", target),  # type: ignore[arg-type]
@@ -76,9 +88,9 @@ def write_style_guide_md(constraints: Dict[str, object], path: str | Path) -> No
         "## 格式规范（必须可导出docx且可被脚本校验）",
         f"- 集标题：`{fmt.get('episode_header')}`",
         f"- 场次行：`{fmt.get('scene_header_pattern')}`（用 Tab 或空格分隔也可，但字段顺序别乱）",
-        f"- 人物行前缀：`{fmt.get('cast_line_prefix')}`（用顿号“、”分隔）",
+        f"- 人物行前缀：`{fmt.get('cast_line_prefix')}`（用顿号\u201c、\u201d分隔）",
         f"- 动作/镜头行前缀：`{fmt.get('stage_direction_prefix')}`（短句、强视觉）",
-        f"- 台词行：`{fmt.get('dialogue_pattern')}`（中文全角冒号“：”）",
+        f"- 台词行：`{fmt.get('dialogue_pattern')}`（中文全角冒号\u201c：\u201d）",
         f"- 允许的转场标记：{fmt.get('allowed_markers')}",
         "",
         "## 节奏硬规则（来自注意事项）",
@@ -86,28 +98,48 @@ def write_style_guide_md(constraints: Dict[str, object], path: str | Path) -> No
         "- 每集：1个核心冲突 + 1个小反转/新信息 + 1个爽点/共情点 + 结尾强钩子。",
         "- 钩子在后续1-2集内回收，同时再埋新钩子，避免挖坑不填。",
         "",
-        "## 结尾钩子四选一（必须明确到“最后一镜/最后一句”）",
+        "## 结尾钩子四选一（必须明确到\u201c最后一镜/最后一句\u201d）",
         "- 冲突卡点钩 / 信息反转钩 / 危机升级钩 / 情感抉择钩",
         "",
     ]
+
+    # 题材层信息
+    if genre_data and isinstance(genre_data, dict):
+        lines.extend([
+            f"## 题材层约束（{genre_data.get('genre', '')}）",
+            "",
+            f"- **核心特征**：{', '.join(genre_data.get('traits', []))}",
+            f"- **冲突模式**：{'; '.join(genre_data.get('conflict_patterns', []))}",
+            f"- **标志性场景**：{'; '.join(genre_data.get('iconic_scenes', []))}",
+        ])
+        hooks = genre_data.get("hook_preferences", {})
+        if hooks:
+            lines.append(f"- **主力钩子**：{hooks.get('primary', '')}（辅助：{hooks.get('secondary', '')}）")
+            lines.append(f"- **钩子说明**：{hooks.get('notes', '')}")
+        overrides = genre_data.get("style_overrides", {})
+        for key, val in overrides.items():
+            lines.append(f"- **{key}**：{val}")
+        lines.append("")
 
     p.write_text("\n".join([x for x in lines if x is not None]), encoding="utf-8")
 
 
 def save_constraints(
     *,
-    scripts: List[str | Path],
-    rhythm_docx: str | Path,
-    end_hook_docx: str | Path,
-    template_docx: str | Path,
-    out_json: str | Path,
-    out_md: str | Path,
+    scripts: List[Union[str, Path]],
+    rhythm_docx: Union[str, Path],
+    end_hook_docx: Union[str, Path],
+    template_docx: Union[str, Path],
+    out_json: Union[str, Path],
+    out_md: Union[str, Path],
+    genre: Optional[str] = None,
 ) -> None:
     c = build_constraints(
         scripts=scripts,
         rhythm_docx=rhythm_docx,
         end_hook_docx=end_hook_docx,
         template_docx=template_docx,
+        genre=genre,
     )
     save_json(c, out_json)
     write_style_guide_md(c, out_md)

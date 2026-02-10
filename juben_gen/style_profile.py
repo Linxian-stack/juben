@@ -4,7 +4,7 @@ import json
 import re
 from dataclasses import dataclass, asdict
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 from .docx_io import read_docx_lines
 
@@ -132,41 +132,58 @@ def build_style_profile(docx_path: str | Path) -> ScriptStyleProfile:
     )
 
 
-def build_combined_profile(docx_paths: List[str | Path]) -> Dict[str, object]:
-    """
-    多个样例脚本合并成一个“目标区间”画像，方便给生成模型做硬约束。
+def build_combined_profile(
+    docx_paths: List[Union[str, Path]],
+    genre: Optional[str] = None,
+) -> Dict[str, object]:
+    """多个样例脚本合并成一个"目标区间"画像，方便给生成模型做硬约束。
+
+    Parameters
+    ----------
+    docx_paths : 样例剧本路径列表
+    genre : 题材标识（如 "apocalypse" 或 "末世"），提供时会附加题材层信息。
     """
     profiles = [build_style_profile(p) for p in docx_paths]
 
     def mean(xs: List[float]) -> float:
         return float(sum(xs) / max(1, len(xs)))
 
-    return {
-        "sources": [asdict(p) for p in profiles],
-        "target": {
-            # 经验：1-2分钟短剧，优先贴近你提供的两套样例的均值，再给可浮动区间
-            "scenes_per_ep": {
-                "suggest": round(mean([p.avg_scenes_per_ep for p in profiles]), 2),
-                "range": [1, 3],
-            },
-            "total_lines_per_ep": {
-                "suggest": round(mean([p.avg_total_lines_per_ep for p in profiles]), 2),
-                "range": [22, 38],
-            },
-            "dialogue_lines_per_ep": {
-                "suggest": round(mean([p.avg_dialogue_lines_per_ep for p in profiles]), 2),
-                "range": [10, 20],
-            },
-            "stage_lines_per_ep": {
-                "suggest": round(mean([p.avg_stage_lines_per_ep for p in profiles]), 2),
-                "range": [8, 20],
-            },
-            "vo_os_lines_per_ep": {
-                "suggest": round(mean([p.avg_vo_os_lines_per_ep for p in profiles]), 2),
-                "range": [0, 6],
-            },
+    universal = {
+        "scenes_per_ep": {
+            "suggest": round(mean([p.avg_scenes_per_ep for p in profiles]), 2),
+            "range": [1, 3],
+        },
+        "total_lines_per_ep": {
+            "suggest": round(mean([p.avg_total_lines_per_ep for p in profiles]), 2),
+            "range": [22, 38],
+        },
+        "dialogue_lines_per_ep": {
+            "suggest": round(mean([p.avg_dialogue_lines_per_ep for p in profiles]), 2),
+            "range": [10, 20],
+        },
+        "stage_lines_per_ep": {
+            "suggest": round(mean([p.avg_stage_lines_per_ep for p in profiles]), 2),
+            "range": [8, 20],
+        },
+        "vo_os_lines_per_ep": {
+            "suggest": round(mean([p.avg_vo_os_lines_per_ep for p in profiles]), 2),
+            "range": [0, 6],
         },
     }
+
+    result: Dict[str, object] = {
+        "sources": [asdict(p) for p in profiles],
+        "universal": universal,
+        "target": universal,  # 向后兼容
+    }
+
+    # 附加题材层信息
+    if genre:
+        from .genres import load_genre
+        genre_template = load_genre(genre)
+        result["genre_specific"] = genre_template.to_dict()
+
+    return result
 
 
 def save_json(obj: object, path: str | Path) -> None:

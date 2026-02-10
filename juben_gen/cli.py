@@ -11,13 +11,15 @@ from .constraints import save_constraints
 
 
 def cmd_profile(args: argparse.Namespace) -> int:
-    profile = build_combined_profile(args.scripts)
+    genre = getattr(args, "genre", None)
+    profile = build_combined_profile(args.scripts, genre=genre)
     save_json(profile, args.out)
     print(f"OK: {args.out}")
     return 0
 
 
 def cmd_constraints(args: argparse.Namespace) -> int:
+    genre = getattr(args, "genre", None)
     save_constraints(
         scripts=args.scripts,
         rhythm_docx=args.rhythm,
@@ -25,6 +27,7 @@ def cmd_constraints(args: argparse.Namespace) -> int:
         template_docx=args.template,
         out_json=args.out_json,
         out_md=args.out_md,
+        genre=genre,
     )
     print(f"OK: {args.out_json}")
     print(f"OK: {args.out_md}")
@@ -431,6 +434,7 @@ def build_parser() -> argparse.ArgumentParser:
     # profile
     p_profile = sub.add_parser("profile", help="从样例剧本docx提取风格画像（JSON）")
     p_profile.add_argument("--scripts", nargs="+", required=True, help="样例剧本docx路径（可多个）")
+    p_profile.add_argument("--genre", default=None, help="题材标识（如 apocalypse/末世），附加题材层信息")
     p_profile.add_argument("--out", required=True, help="输出JSON路径")
     p_profile.set_defaults(func=cmd_profile)
 
@@ -440,6 +444,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_constraints.add_argument("--rhythm", required=True, help="节奏适配注意事项 docx")
     p_constraints.add_argument("--end_hook", required=True, help="每集结尾钩子核心 docx")
     p_constraints.add_argument("--template", required=True, help="短剧一卡通用模板 docx")
+    p_constraints.add_argument("--genre", default=None, help="题材标识（如 apocalypse/末世），融合题材约束")
     p_constraints.add_argument("--out_json", required=True, help="输出约束 JSON 路径")
     p_constraints.add_argument("--out_md", required=True, help="输出约束说明 MD 路径")
     p_constraints.set_defaults(func=cmd_constraints)
