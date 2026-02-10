@@ -131,10 +131,10 @@ def cmd_generate(args: argparse.Namespace) -> int:
     chapter_start, chapter_end = _parse_chapter_range(args.chapters)
     failed_steps: list[str] = []
 
-    # ── 步骤 1/4：Story Bible ──
+    # ── 步骤 1/5：Story Bible ──
     bible_path = out_dir / "bible.json"
     print(f"\n{'='*50}")
-    print(f"[1/4] 生成 Story Bible（第{chapter_start}-{chapter_end}章）")
+    print(f"[1/5] 生成 Story Bible（第{chapter_start}-{chapter_end}章）")
     print(f"{'='*50}")
 
     try:
@@ -155,10 +155,10 @@ def cmd_generate(args: argparse.Namespace) -> int:
         print(f"\n✗ 全流程中断：Story Bible 生成失败，后续步骤依赖此输出")
         return 1
 
-    # ── 步骤 2/4：节拍表 ──
+    # ── 步骤 2/5：节拍表 ──
     plan_path = out_dir / "plan.json"
     print(f"\n{'='*50}")
-    print(f"[2/4] 生成节拍表")
+    print(f"[2/5] 生成节拍表")
     print(f"{'='*50}")
 
     try:
@@ -176,9 +176,9 @@ def cmd_generate(args: argparse.Namespace) -> int:
         print(f"\n✗ 全流程中断：节拍表生成失败，后续步骤依赖此输出")
         return 1
 
-    # ── 步骤 3/4：逐集剧本生成 ──
+    # ── 步骤 3/5：逐集剧本生成 ──
     print(f"\n{'='*50}")
-    print(f"[3/4] 逐集生成剧本（共 {len(plan)} 集）")
+    print(f"[3/5] 逐集生成剧本（共 {len(plan)} 集）")
     print(f"{'='*50}")
 
     try:
@@ -197,18 +197,18 @@ def cmd_generate(args: argparse.Namespace) -> int:
         failed_steps.append("剧本生成")
         episodes = []
 
-    # ── 步骤 4/4：审稿循环（可选跳过） ──
+    # ── 步骤 4/5：审稿循环（可选跳过） ──
     if args.skip_review:
         print(f"\n{'='*50}")
-        print(f"[4/4] 审稿循环（已跳过 --skip-review）")
+        print(f"[4/5] 审稿循环（已跳过 --skip-review）")
         print(f"{'='*50}")
     elif not episodes:
         print(f"\n{'='*50}")
-        print(f"[4/4] 审稿循环（跳过：无剧本可审）")
+        print(f"[4/5] 审稿循环（跳过：无剧本可审）")
         print(f"{'='*50}")
     else:
         print(f"\n{'='*50}")
-        print(f"[4/4] 审稿循环（{len(episodes)} 集，最多 {args.max_rounds} 轮）")
+        print(f"[4/5] 审稿循环（{len(episodes)} 集，最多 {args.max_rounds} 轮）")
         print(f"{'='*50}")
 
         try:
@@ -239,6 +239,43 @@ def cmd_generate(args: argparse.Namespace) -> int:
             traceback.print_exc()
             failed_steps.append("审稿循环")
 
+    # ── 步骤 5/5：样例对比评估 ──
+    eval_report_path = None
+    if episodes:
+        print(f"\n{'='*50}")
+        print(f"[5/5] 样例对比评估")
+        print(f"{'='*50}")
+
+        try:
+            from .evaluator import evaluate_script, load_target as eval_load_target
+            from .evaluator import format_report_md, save_report
+
+            # 读取合并版剧本
+            full_txt = out_dir / "script_full.txt"
+            if full_txt.exists():
+                script_text = full_txt.read_text(encoding="utf-8")
+            else:
+                # 回退：拼接各集 txt
+                ep_dir = out_dir / "episodes"
+                ep_files = sorted(ep_dir.glob("ep*.txt"))
+                script_text = "\n".join(f.read_text(encoding="utf-8") for f in ep_files)
+
+            eval_target = eval_load_target(args.constraints.replace(
+                "constraints.fused.json", "style_profile.json"
+            ) if hasattr(args, "constraints") else "juben_gen/style_profile.json")
+            report = evaluate_script(script_text, eval_target)
+            eval_report_path = save_report(report, str(out_dir))
+            print(format_report_md(report))
+            print(f"  ✓ 评估报告已保存: {eval_report_path}")
+        except Exception as e:
+            logger.error("样例对比评估失败: %s", e)
+            traceback.print_exc()
+            failed_steps.append("样例对比评估")
+    else:
+        print(f"\n{'='*50}")
+        print(f"[5/5] 样例对比评估（跳过：无剧本可评估）")
+        print(f"{'='*50}")
+
     # ── 汇总 ──
     print(f"\n{'='*50}")
     if failed_steps:
@@ -251,6 +288,8 @@ def cmd_generate(args: argparse.Namespace) -> int:
     print(f"  合并版本: script_full.txt + script_full.docx")
     if not args.skip_review and episodes:
         print(f"  审稿日志: reviews/")
+    if eval_report_path:
+        print(f"  评估报告: {eval_report_path}")
     print(f"{'='*50}")
 
     return 1 if failed_steps else 0
@@ -279,6 +318,29 @@ def cmd_validate(args: argparse.Namespace) -> int:
         print(format_report(results))
 
     return 0 if all(r.passed for r in results) else 1
+
+
+def cmd_evaluate(args: argparse.Namespace) -> int:
+    """对生成剧本做样例对比评估。"""
+    from .evaluator import evaluate_script, load_target as eval_load_target
+    from .evaluator import format_report_md, save_report
+
+    script_path = Path(args.script)
+    if not script_path.exists():
+        print(f"文件不存在：{script_path}")
+        return 1
+
+    text = script_path.read_text(encoding="utf-8")
+    target = eval_load_target(args.profile)
+    report = evaluate_script(text, target)
+
+    print(format_report_md(report))
+
+    if args.out:
+        rp = save_report(report, args.out)
+        print(f"报告已保存: {rp}")
+
+    return 0 if report.all_in_range else 1
 
 
 def cmd_plan(args: argparse.Namespace) -> int:
@@ -425,6 +487,13 @@ def build_parser() -> argparse.ArgumentParser:
     p_validate.add_argument("--profile", default="juben_gen/style_profile.json", help="风格画像 JSON 路径")
     p_validate.add_argument("--json", action="store_true", help="输出 JSON 格式")
     p_validate.set_defaults(func=cmd_validate)
+
+    # evaluate
+    p_eval = sub.add_parser("evaluate", help="样例对比评估：生成剧本 vs 样例均值")
+    p_eval.add_argument("script", help="剧本 TXT 文件路径")
+    p_eval.add_argument("--profile", default="juben_gen/style_profile.json", help="风格画像 JSON 路径")
+    p_eval.add_argument("--out", default=None, help="报告输出目录（可选）")
+    p_eval.set_defaults(func=cmd_evaluate)
 
     # review
     p_review = sub.add_parser("review", help="对已生成的剧本执行审稿循环（校验+评分+返修）")
