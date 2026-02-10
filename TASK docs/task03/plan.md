@@ -21,6 +21,15 @@
 ## 执行顺序
 Phase 01 → 02 → 03 → 04 → 05 → 06（流水线各环节按顺序实现，最后 CLI 串联）
 
+## 进度追踪
+
+- [x] phase01: C1 Story Bible 生成
+- [ ] phase02: C2 节拍表规划
+- [ ] phase03: C3 剧本生成
+- [ ] phase04: C4 审稿评分
+- [ ] phase05: C5 返修循环
+- [ ] phase06: C6 CLI 集成
+
 ## 验收标准
 - 单一 `generate` 命令可执行全流程
 - 输入：小说 TXT/DOCX + 章节范围
