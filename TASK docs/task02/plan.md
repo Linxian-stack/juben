@@ -21,8 +21,8 @@ Phase 01 → 02 → 03（客户端先行，prompt 依赖客户端接口，配置
 ## 进度追踪
 
 - [x] phase01: B1 LLM 客户端重构
-- [ ] phase02: B2 Prompt 模板优化
-- [ ] phase03: B3 配置系统简化
+- [x] phase02: B2 Prompt 模板优化
+- [x] phase03: B3 配置系统简化
 
 ## 验收标准
 - OpenAI 相关代码和依赖完全移除

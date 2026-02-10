@@ -1,9 +1,11 @@
 {
   "roles": {
-    "bible":   { "model": "claude-sonnet-4-20250514",  "thinking": false },
-    "plan":    { "model": "claude-sonnet-4-20250514",  "thinking": true, "budget_tokens": 10000 },
-    "write":   { "model": "claude-sonnet-4-20250514",  "thinking": false },
-    "judge":   { "model": "claude-haiku-4-20250414",   "thinking": false },
-    "rewrite": { "model": "claude-sonnet-4-20250514",  "thinking": false }
-  }
+    "bible":   { "model": "claude-sonnet-4-20250514" },
+    "plan":    { "model": "claude-sonnet-4-20250514", "thinking": true },
+    "write":   { "model": "claude-sonnet-4-20250514" },
+    "judge":   { "model": "claude-haiku-4-20250414",  "thinking": true },
+    "rewrite": { "model": "claude-sonnet-4-20250514" }
+  },
+  "retry": { "max_attempts": 3, "base_delay": 1.0 },
+  "output": { "save_intermediates": true }
 }

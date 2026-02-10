@@ -17,6 +17,36 @@ python -m juben_gen.cli profile `
   --out "juben_gen/style_profile.json"
 ```
 
+## 配置（Claude）
+
+### 1) 设置 API Key（环境变量）
+
+> 配置文件 **不存** API Key，请用环境变量 `ANTHROPIC_API_KEY`。
+
+```powershell
+$env:ANTHROPIC_API_KEY = "YOUR_KEY"
+# 可选：自定义 API Base URL（如代理/私有网关）
+$env:ANTHROPIC_BASE_URL = "https://api.anthropic.com"
+```
+
+### 2) 准备 config.json（可选）
+
+将 `juben_gen/config.example.json` 复制为 `juben_gen/config.json`，按需调整模型分配与重试参数：
+
+```json
+{
+  "roles": {
+    "bible":   { "model": "claude-sonnet-4-20250514" },
+    "plan":    { "model": "claude-sonnet-4-20250514", "thinking": true },
+    "write":   { "model": "claude-sonnet-4-20250514" },
+    "judge":   { "model": "claude-haiku-4-20250414",  "thinking": true },
+    "rewrite": { "model": "claude-sonnet-4-20250514" }
+  },
+  "retry": { "max_attempts": 3, "base_delay": 1.0 },
+  "output": { "save_intermediates": true }
+}
+```
+
 ## 多模型流水线建议（落盘 JSON，便于复盘）
 
 1. **结构化（模型A，长文理解）**：小说片段 -> story bible（JSON）
@@ -25,5 +55,4 @@ python -m juben_gen.cli profile `
 4. **审稿打分（模型C，独立评审）**：量化评分 + 可执行修改清单（JSON）
 5. **最小返修（模型B/A）**：只按修改清单返修，避免跑题
 
-> 代码里已准备：规则读取（3份注意事项docx）、风格画像、prompt 组装与基础 API 客户端（OpenAI/Anthropic）。
-
+> 代码里已准备：规则读取（3份注意事项docx）、风格画像、prompt 组装与 Claude（anthropic SDK）客户端。
