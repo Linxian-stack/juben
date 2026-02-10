@@ -29,6 +29,31 @@ def cmd_constraints(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_write(args: argparse.Namespace) -> int:
+    from .writer import generate_all_episodes
+    from .config import maybe_load_config
+    from .rules import load_rules_from_docx
+
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+
+    config = maybe_load_config(args.config)
+    rules = load_rules_from_docx(
+        rhythm_docx=args.rhythm,
+        end_hook_docx=args.end_hook,
+        template_docx=args.template,
+    )
+
+    episodes = generate_all_episodes(
+        plan_path=args.plan,
+        rules=rules,
+        config=config,
+        constraints_path=args.constraints,
+        output_dir=args.out,
+    )
+    print(f"OK: {len(episodes)} 集剧本已生成 -> {args.out}")
+    return 0
+
+
 def cmd_plan(args: argparse.Namespace) -> int:
     from .planner import generate_plan, save_plan
     from .config import maybe_load_config
@@ -137,6 +162,17 @@ def build_parser() -> argparse.ArgumentParser:
     p_plan.add_argument("--config", default=None, help="配置文件路径")
     p_plan.add_argument("--out", required=True, help="输出节拍表 JSON 路径")
     p_plan.set_defaults(func=cmd_plan)
+
+    # write
+    p_write = sub.add_parser("write", help="从节拍表逐集生成剧本（TXT+DOCX）")
+    p_write.add_argument("--plan", required=True, help="节拍表 JSON 路径")
+    p_write.add_argument("--rhythm", required=True, help="节奏适配注意事项 docx")
+    p_write.add_argument("--end_hook", required=True, help="每集结尾钩子核心 docx")
+    p_write.add_argument("--template", required=True, help="短剧一卡通用模板 docx")
+    p_write.add_argument("--constraints", default="juben_gen/constraints.fused.json", help="融合约束 JSON 路径")
+    p_write.add_argument("--config", default=None, help="配置文件路径")
+    p_write.add_argument("--out", required=True, help="输出目录路径")
+    p_write.set_defaults(func=cmd_write)
 
     return p
 
