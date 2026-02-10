@@ -1,0 +1,9 @@
+{
+  "roles": {
+    "bible":   { "model": "claude-sonnet-4-20250514",  "thinking": false },
+    "plan":    { "model": "claude-sonnet-4-20250514",  "thinking": true, "budget_tokens": 10000 },
+    "write":   { "model": "claude-sonnet-4-20250514",  "thinking": false },
+    "judge":   { "model": "claude-haiku-4-20250414",   "thinking": false },
+    "rewrite": { "model": "claude-sonnet-4-20250514",  "thinking": false }
+  }
+}

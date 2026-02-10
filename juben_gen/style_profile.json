@@ -1,0 +1,903 @@
+{
+  "sources": [
+    {
+      "file": "末世天灾，我靠吞金超市躺赢.docx",
+      "episodes": 80,
+      "episode_range": [
+        1,
+        80
+      ],
+      "avg_scenes_per_ep": 1.9,
+      "avg_total_lines_per_ep": 30.0375,
+      "avg_dialogue_lines_per_ep": 13.025,
+      "avg_stage_lines_per_ep": 13.25,
+      "avg_vo_os_lines_per_ep": 2.6375,
+      "per_episode": [
+        {
+          "episode": 1,
+          "scenes": 2,
+          "total_lines": 44,
+          "dialogue_lines": 16,
+          "stage_lines": 24,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 2,
+          "scenes": 2,
+          "total_lines": 18,
+          "dialogue_lines": 6,
+          "stage_lines": 8,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 3,
+          "scenes": 1,
+          "total_lines": 21,
+          "dialogue_lines": 9,
+          "stage_lines": 10,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 4,
+          "scenes": 1,
+          "total_lines": 21,
+          "dialogue_lines": 11,
+          "stage_lines": 8,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 5,
+          "scenes": 2,
+          "total_lines": 22,
+          "dialogue_lines": 10,
+          "stage_lines": 8,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 6,
+          "scenes": 1,
+          "total_lines": 23,
+          "dialogue_lines": 10,
+          "stage_lines": 11,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 7,
+          "scenes": 1,
+          "total_lines": 17,
+          "dialogue_lines": 7,
+          "stage_lines": 8,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 8,
+          "scenes": 1,
+          "total_lines": 18,
+          "dialogue_lines": 10,
+          "stage_lines": 6,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 9,
+          "scenes": 1,
+          "total_lines": 23,
+          "dialogue_lines": 9,
+          "stage_lines": 12,
+          "vo_os_lines": 5
+        },
+        {
+          "episode": 10,
+          "scenes": 1,
+          "total_lines": 19,
+          "dialogue_lines": 7,
+          "stage_lines": 10,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 11,
+          "scenes": 3,
+          "total_lines": 47,
+          "dialogue_lines": 23,
+          "stage_lines": 18,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 12,
+          "scenes": 3,
+          "total_lines": 36,
+          "dialogue_lines": 13,
+          "stage_lines": 17,
+          "vo_os_lines": 5
+        },
+        {
+          "episode": 13,
+          "scenes": 1,
+          "total_lines": 22,
+          "dialogue_lines": 9,
+          "stage_lines": 11,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 14,
+          "scenes": 2,
+          "total_lines": 24,
+          "dialogue_lines": 9,
+          "stage_lines": 11,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 15,
+          "scenes": 2,
+          "total_lines": 23,
+          "dialogue_lines": 9,
+          "stage_lines": 10,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 16,
+          "scenes": 2,
+          "total_lines": 22,
+          "dialogue_lines": 12,
+          "stage_lines": 6,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 17,
+          "scenes": 2,
+          "total_lines": 25,
+          "dialogue_lines": 11,
+          "stage_lines": 11,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 18,
+          "scenes": 1,
+          "total_lines": 24,
+          "dialogue_lines": 13,
+          "stage_lines": 9,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 19,
+          "scenes": 3,
+          "total_lines": 25,
+          "dialogue_lines": 11,
+          "stage_lines": 8,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 20,
+          "scenes": 1,
+          "total_lines": 28,
+          "dialogue_lines": 6,
+          "stage_lines": 20,
+          "vo_os_lines": 8
+        },
+        {
+          "episode": 21,
+          "scenes": 0,
+          "total_lines": 33,
+          "dialogue_lines": 15,
+          "stage_lines": 17,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 22,
+          "scenes": 1,
+          "total_lines": 30,
+          "dialogue_lines": 18,
+          "stage_lines": 10,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 23,
+          "scenes": 2,
+          "total_lines": 27,
+          "dialogue_lines": 10,
+          "stage_lines": 13,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 24,
+          "scenes": 1,
+          "total_lines": 29,
+          "dialogue_lines": 4,
+          "stage_lines": 23,
+          "vo_os_lines": 9
+        },
+        {
+          "episode": 25,
+          "scenes": 1,
+          "total_lines": 33,
+          "dialogue_lines": 14,
+          "stage_lines": 17,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 26,
+          "scenes": 2,
+          "total_lines": 28,
+          "dialogue_lines": 9,
+          "stage_lines": 15,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 27,
+          "scenes": 1,
+          "total_lines": 31,
+          "dialogue_lines": 13,
+          "stage_lines": 16,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 28,
+          "scenes": 2,
+          "total_lines": 33,
+          "dialogue_lines": 20,
+          "stage_lines": 9,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 29,
+          "scenes": 1,
+          "total_lines": 24,
+          "dialogue_lines": 15,
+          "stage_lines": 7,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 30,
+          "scenes": 1,
+          "total_lines": 32,
+          "dialogue_lines": 17,
+          "stage_lines": 13,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 31,
+          "scenes": 2,
+          "total_lines": 35,
+          "dialogue_lines": 15,
+          "stage_lines": 16,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 32,
+          "scenes": 2,
+          "total_lines": 28,
+          "dialogue_lines": 14,
+          "stage_lines": 10,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 33,
+          "scenes": 3,
+          "total_lines": 24,
+          "dialogue_lines": 6,
+          "stage_lines": 12,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 34,
+          "scenes": 2,
+          "total_lines": 25,
+          "dialogue_lines": 6,
+          "stage_lines": 15,
+          "vo_os_lines": 8
+        },
+        {
+          "episode": 35,
+          "scenes": 2,
+          "total_lines": 26,
+          "dialogue_lines": 11,
+          "stage_lines": 11,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 36,
+          "scenes": 2,
+          "total_lines": 27,
+          "dialogue_lines": 11,
+          "stage_lines": 12,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 37,
+          "scenes": 1,
+          "total_lines": 42,
+          "dialogue_lines": 23,
+          "stage_lines": 17,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 38,
+          "scenes": 1,
+          "total_lines": 31,
+          "dialogue_lines": 18,
+          "stage_lines": 11,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 39,
+          "scenes": 3,
+          "total_lines": 36,
+          "dialogue_lines": 10,
+          "stage_lines": 21,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 40,
+          "scenes": 2,
+          "total_lines": 55,
+          "dialogue_lines": 26,
+          "stage_lines": 25,
+          "vo_os_lines": 7
+        },
+        {
+          "episode": 41,
+          "scenes": 1,
+          "total_lines": 28,
+          "dialogue_lines": 10,
+          "stage_lines": 16,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 42,
+          "scenes": 2,
+          "total_lines": 31,
+          "dialogue_lines": 13,
+          "stage_lines": 14,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 43,
+          "scenes": 3,
+          "total_lines": 27,
+          "dialogue_lines": 12,
+          "stage_lines": 9,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 44,
+          "scenes": 3,
+          "total_lines": 39,
+          "dialogue_lines": 20,
+          "stage_lines": 13,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 45,
+          "scenes": 1,
+          "total_lines": 27,
+          "dialogue_lines": 13,
+          "stage_lines": 12,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 46,
+          "scenes": 2,
+          "total_lines": 25,
+          "dialogue_lines": 10,
+          "stage_lines": 11,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 47,
+          "scenes": 2,
+          "total_lines": 19,
+          "dialogue_lines": 12,
+          "stage_lines": 3,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 48,
+          "scenes": 2,
+          "total_lines": 26,
+          "dialogue_lines": 11,
+          "stage_lines": 11,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 49,
+          "scenes": 3,
+          "total_lines": 37,
+          "dialogue_lines": 16,
+          "stage_lines": 17,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 50,
+          "scenes": 3,
+          "total_lines": 32,
+          "dialogue_lines": 9,
+          "stage_lines": 17,
+          "vo_os_lines": 5
+        },
+        {
+          "episode": 51,
+          "scenes": 4,
+          "total_lines": 32,
+          "dialogue_lines": 16,
+          "stage_lines": 8,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 52,
+          "scenes": 1,
+          "total_lines": 32,
+          "dialogue_lines": 14,
+          "stage_lines": 16,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 53,
+          "scenes": 1,
+          "total_lines": 47,
+          "dialogue_lines": 20,
+          "stage_lines": 25,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 54,
+          "scenes": 2,
+          "total_lines": 19,
+          "dialogue_lines": 5,
+          "stage_lines": 10,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 55,
+          "scenes": 2,
+          "total_lines": 30,
+          "dialogue_lines": 15,
+          "stage_lines": 11,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 56,
+          "scenes": 2,
+          "total_lines": 31,
+          "dialogue_lines": 12,
+          "stage_lines": 15,
+          "vo_os_lines": 5
+        },
+        {
+          "episode": 57,
+          "scenes": 4,
+          "total_lines": 38,
+          "dialogue_lines": 13,
+          "stage_lines": 18,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 58,
+          "scenes": 2,
+          "total_lines": 35,
+          "dialogue_lines": 16,
+          "stage_lines": 16,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 59,
+          "scenes": 1,
+          "total_lines": 26,
+          "dialogue_lines": 13,
+          "stage_lines": 11,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 60,
+          "scenes": 1,
+          "total_lines": 26,
+          "dialogue_lines": 10,
+          "stage_lines": 14,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 61,
+          "scenes": 5,
+          "total_lines": 37,
+          "dialogue_lines": 11,
+          "stage_lines": 16,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 62,
+          "scenes": 5,
+          "total_lines": 30,
+          "dialogue_lines": 9,
+          "stage_lines": 11,
+          "vo_os_lines": 6
+        },
+        {
+          "episode": 63,
+          "scenes": 2,
+          "total_lines": 33,
+          "dialogue_lines": 12,
+          "stage_lines": 17,
+          "vo_os_lines": 5
+        },
+        {
+          "episode": 64,
+          "scenes": 2,
+          "total_lines": 25,
+          "dialogue_lines": 13,
+          "stage_lines": 8,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 65,
+          "scenes": 0,
+          "total_lines": 43,
+          "dialogue_lines": 27,
+          "stage_lines": 15,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 66,
+          "scenes": 0,
+          "total_lines": 27,
+          "dialogue_lines": 15,
+          "stage_lines": 10,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 67,
+          "scenes": 2,
+          "total_lines": 42,
+          "dialogue_lines": 14,
+          "stage_lines": 23,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 68,
+          "scenes": 2,
+          "total_lines": 30,
+          "dialogue_lines": 14,
+          "stage_lines": 12,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 69,
+          "scenes": 1,
+          "total_lines": 33,
+          "dialogue_lines": 13,
+          "stage_lines": 18,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 70,
+          "scenes": 3,
+          "total_lines": 26,
+          "dialogue_lines": 10,
+          "stage_lines": 11,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 71,
+          "scenes": 3,
+          "total_lines": 34,
+          "dialogue_lines": 8,
+          "stage_lines": 20,
+          "vo_os_lines": 8
+        },
+        {
+          "episode": 72,
+          "scenes": 3,
+          "total_lines": 44,
+          "dialogue_lines": 16,
+          "stage_lines": 22,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 73,
+          "scenes": 1,
+          "total_lines": 31,
+          "dialogue_lines": 13,
+          "stage_lines": 16,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 74,
+          "scenes": 2,
+          "total_lines": 22,
+          "dialogue_lines": 12,
+          "stage_lines": 6,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 75,
+          "scenes": 4,
+          "total_lines": 34,
+          "dialogue_lines": 12,
+          "stage_lines": 14,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 76,
+          "scenes": 1,
+          "total_lines": 23,
+          "dialogue_lines": 12,
+          "stage_lines": 9,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 77,
+          "scenes": 1,
+          "total_lines": 28,
+          "dialogue_lines": 15,
+          "stage_lines": 11,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 78,
+          "scenes": 2,
+          "total_lines": 37,
+          "dialogue_lines": 23,
+          "stage_lines": 10,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 79,
+          "scenes": 3,
+          "total_lines": 33,
+          "dialogue_lines": 17,
+          "stage_lines": 11,
+          "vo_os_lines": 2
+        },
+        {
+          "episode": 80,
+          "scenes": 3,
+          "total_lines": 53,
+          "dialogue_lines": 30,
+          "stage_lines": 17,
+          "vo_os_lines": 3
+        }
+      ]
+    },
+    {
+      "file": "地狱游戏：开局获得预知羊皮纸1216(1).docx",
+      "episodes": 24,
+      "episode_range": [
+        7,
+        30
+      ],
+      "avg_scenes_per_ep": 1.5,
+      "avg_total_lines_per_ep": 26.166666666666668,
+      "avg_dialogue_lines_per_ep": 7.541666666666667,
+      "avg_stage_lines_per_ep": 15.208333333333334,
+      "avg_vo_os_lines_per_ep": 6.041666666666667,
+      "per_episode": [
+        {
+          "episode": 7,
+          "scenes": 1,
+          "total_lines": 14,
+          "dialogue_lines": 1,
+          "stage_lines": 11,
+          "vo_os_lines": 6
+        },
+        {
+          "episode": 8,
+          "scenes": 1,
+          "total_lines": 21,
+          "dialogue_lines": 9,
+          "stage_lines": 10,
+          "vo_os_lines": 0
+        },
+        {
+          "episode": 9,
+          "scenes": 1,
+          "total_lines": 26,
+          "dialogue_lines": 19,
+          "stage_lines": 5,
+          "vo_os_lines": 1
+        },
+        {
+          "episode": 10,
+          "scenes": 3,
+          "total_lines": 27,
+          "dialogue_lines": 10,
+          "stage_lines": 11,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 11,
+          "scenes": 2,
+          "total_lines": 36,
+          "dialogue_lines": 8,
+          "stage_lines": 20,
+          "vo_os_lines": 11
+        },
+        {
+          "episode": 12,
+          "scenes": 1,
+          "total_lines": 21,
+          "dialogue_lines": 8,
+          "stage_lines": 11,
+          "vo_os_lines": 6
+        },
+        {
+          "episode": 13,
+          "scenes": 3,
+          "total_lines": 29,
+          "dialogue_lines": 7,
+          "stage_lines": 16,
+          "vo_os_lines": 9
+        },
+        {
+          "episode": 14,
+          "scenes": 1,
+          "total_lines": 27,
+          "dialogue_lines": 5,
+          "stage_lines": 20,
+          "vo_os_lines": 7
+        },
+        {
+          "episode": 15,
+          "scenes": 1,
+          "total_lines": 27,
+          "dialogue_lines": 4,
+          "stage_lines": 20,
+          "vo_os_lines": 7
+        },
+        {
+          "episode": 16,
+          "scenes": 1,
+          "total_lines": 34,
+          "dialogue_lines": 10,
+          "stage_lines": 20,
+          "vo_os_lines": 9
+        },
+        {
+          "episode": 17,
+          "scenes": 1,
+          "total_lines": 21,
+          "dialogue_lines": 5,
+          "stage_lines": 13,
+          "vo_os_lines": 6
+        },
+        {
+          "episode": 18,
+          "scenes": 1,
+          "total_lines": 28,
+          "dialogue_lines": 12,
+          "stage_lines": 14,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 19,
+          "scenes": 2,
+          "total_lines": 45,
+          "dialogue_lines": 9,
+          "stage_lines": 32,
+          "vo_os_lines": 12
+        },
+        {
+          "episode": 20,
+          "scenes": 2,
+          "total_lines": 20,
+          "dialogue_lines": 2,
+          "stage_lines": 14,
+          "vo_os_lines": 6
+        },
+        {
+          "episode": 21,
+          "scenes": 2,
+          "total_lines": 39,
+          "dialogue_lines": 9,
+          "stage_lines": 25,
+          "vo_os_lines": 20
+        },
+        {
+          "episode": 22,
+          "scenes": 1,
+          "total_lines": 20,
+          "dialogue_lines": 7,
+          "stage_lines": 11,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 23,
+          "scenes": 1,
+          "total_lines": 25,
+          "dialogue_lines": 4,
+          "stage_lines": 19,
+          "vo_os_lines": 5
+        },
+        {
+          "episode": 24,
+          "scenes": 2,
+          "total_lines": 23,
+          "dialogue_lines": 7,
+          "stage_lines": 12,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 25,
+          "scenes": 2,
+          "total_lines": 23,
+          "dialogue_lines": 6,
+          "stage_lines": 13,
+          "vo_os_lines": 5
+        },
+        {
+          "episode": 26,
+          "scenes": 1,
+          "total_lines": 23,
+          "dialogue_lines": 8,
+          "stage_lines": 12,
+          "vo_os_lines": 6
+        },
+        {
+          "episode": 27,
+          "scenes": 3,
+          "total_lines": 24,
+          "dialogue_lines": 4,
+          "stage_lines": 14,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 28,
+          "scenes": 1,
+          "total_lines": 23,
+          "dialogue_lines": 7,
+          "stage_lines": 14,
+          "vo_os_lines": 4
+        },
+        {
+          "episode": 29,
+          "scenes": 1,
+          "total_lines": 27,
+          "dialogue_lines": 9,
+          "stage_lines": 16,
+          "vo_os_lines": 3
+        },
+        {
+          "episode": 30,
+          "scenes": 1,
+          "total_lines": 25,
+          "dialogue_lines": 11,
+          "stage_lines": 12,
+          "vo_os_lines": 3
+        }
+      ]
+    }
+  ],
+  "target": {
+    "scenes_per_ep": {
+      "suggest": 1.7,
+      "range": [
+        1,
+        3
+      ]
+    },
+    "total_lines_per_ep": {
+      "suggest": 28.1,
+      "range": [
+        22,
+        38
+      ]
+    },
+    "dialogue_lines_per_ep": {
+      "suggest": 10.28,
+      "range": [
+        10,
+        20
+      ]
+    },
+    "stage_lines_per_ep": {
+      "suggest": 14.23,
+      "range": [
+        8,
+        20
+      ]
+    },
+    "vo_os_lines_per_ep": {
+      "suggest": 4.34,
+      "range": [
+        0,
+        6
+      ]
+    }
+  }
+}
